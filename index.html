@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chengyang Shi</title>
+  <meta name="description" content="Personal Website of Chengyang Shi" />
+  <meta name="author" content="Chengyang Shi" />
+  <meta property="og:title" content="Chengyang Shi" />
+  <meta property="og:description" content="Personal Website of Chengyang Shi" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/png" href="./favicon.png" />
+  <link rel="apple-touch-icon" href="./favicon.png" />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css" referrerpolicy="no-referrer" />
+  <style>
+:root{
+  --bg:#ffffff; --fg:#1f2328; --muted:#656d76; --line:#e5e7eb;
+  --accent:#2457d6; --accent-soft:#eaf0ff; --maxw:880px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--fg);background:var(--bg);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"Noto Sans",sans-serif;
+  line-height:1.65;font-size:17px;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.86);
+  backdrop-filter:saturate(180%) blur(8px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:var(--maxw);margin:0 auto;padding:12px 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nav-brand{font-weight:700;color:var(--fg);font-size:16px}
+.nav-brand:hover{text-decoration:none;color:var(--accent)}
+.nav-links{display:flex;gap:20px;flex-wrap:wrap}
+.nav-links a{color:var(--muted);font-size:14.5px;font-weight:500}
+.nav-links a:hover{color:var(--accent);text-decoration:none}
+
+/* hero */
+.hero{display:flex;gap:34px;align-items:center;padding:54px 0 28px}
+.avatar{width:172px;height:172px;border-radius:50%;object-fit:cover;
+  border:1px solid var(--line);box-shadow:0 6px 24px rgba(0,0,0,.07);flex:none;background:#f3f4f6}
+.hero-text{min-width:0}
+.name{margin:0 0 4px;font-size:34px;font-weight:700;letter-spacing:-.01em}
+.name-alt{margin:0 0 6px;color:var(--muted);font-size:18px}
+.professions{margin:0 0 10px;color:var(--accent);font-weight:600}
+.meta{display:flex;flex-wrap:wrap;gap:6px 20px;color:var(--muted);font-size:15px;margin-bottom:12px}
+.meta-item i{color:var(--accent);margin-right:6px}
+.meta a{color:var(--muted)}
+.meta a:hover{color:var(--accent)}
+.socials{display:flex;gap:14px;font-size:21px}
+.social-link{color:var(--muted);transition:color .15s,transform .15s}
+.social-link:hover{color:var(--accent);transform:translateY(-2px)}
+
+/* sections */
+.section{padding:26px 0;border-top:1px solid var(--line)}
+.section-title{font-size:22px;font-weight:700;margin:0 0 16px;letter-spacing:-.01em}
+.subhead{font-size:16px;color:var(--muted);margin:18px 0 8px;font-weight:600}
+.prose p{margin:0 0 14px}
+.prose p:last-child{margin-bottom:0}
+
+/* interests */
+.interest-grid{display:flex;flex-wrap:wrap;gap:12px}
+.interest{display:flex;align-items:center;gap:10px;padding:10px 16px;
+  background:var(--accent-soft);border:1px solid #dbe4ff;border-radius:999px;font-weight:500;font-size:15.5px}
+.interest-icon i{color:var(--accent)}
+
+/* timeline (education / experience / awards) */
+.timeline{list-style:none;margin:0;padding:0}
+.tl-item{display:flex;gap:20px;padding:12px 0;border-bottom:1px dashed var(--line)}
+.tl-item:last-child{border-bottom:none}
+.tl-date{flex:none;width:128px;color:var(--muted);font-size:14.5px;padding-top:2px;font-variant-numeric:tabular-nums}
+.tl-body{min-width:0}
+.tl-title{font-weight:600}
+.tl-sub{color:var(--muted);font-size:15px}
+.tl-desc{font-size:15.5px;margin-top:3px}
+
+/* footer */
+.footer{border-top:1px solid var(--line);margin-top:36px;padding:24px 0;color:var(--muted);font-size:14px}
+
+/* responsive */
+@media (max-width:680px){
+  body{font-size:16px}
+  .hero{flex-direction:column;text-align:center;gap:20px;padding:36px 0 20px}
+  .avatar{width:140px;height:140px}
+  .meta,.socials,.interest-grid{justify-content:center}
+  .name{font-size:28px}
+  .tl-item{flex-direction:column;gap:2px}
+  .tl-date{width:auto}
+  .nav-brand{max-width:55%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+}
+</style>
+</head>
+<body>
+
+    <nav class="nav">
+      <div class="nav-inner">
+        <a class="nav-brand" href="#top">Chengyang Shi</a>
+        <div class="nav-links"><a href="#about">About</a><a href="#interests">Interests</a><a href="#education">Education</a><a href="#experience">Experience</a><a href="#contact">Contact</a></div>
+      </div>
+    </nav>
+  <main class="container">
+
+    <header class="hero" id="top">
+      <img class="avatar" src="./avatar.png" alt="Chengyang Shi" />
+      <div class="hero-text">
+        <h1 class="name">Chengyang Shi</h1>
+        
+        
+        <div class="meta"><span class="meta-item"><i class="fa-solid fa-location-dot " aria-hidden="true"></i> Ann Arbor, MI, USA</span><span class="meta-item"><i class="fa-solid fa-envelope " aria-hidden="true"></i> <a href="mailto:chengysh@umich.edu">chengysh@umich.edu</a></span></div>
+        <div class="socials">
+        <a class="social-link" href="https://github.com/ShokuhouMisak1" target="_blank" rel="noopener" aria-label="link"><i class="fa-brands fa-github " aria-hidden="true"></i></a>
+        <a class="social-link" href="mailto:chengysh@umich.edu" target="_blank" rel="noopener" aria-label="link"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a>
+        <a class="social-link" href="https://www.linkedin.com/in/chengyang-shi-91844738b/" target="_blank" rel="noopener" aria-label="link"><i class="fa-brands fa-linkedin " aria-hidden="true"></i></a></div>
+      </div>
+    </header>
+
+    <section class="section" id="about">
+      <h2 class="section-title">About</h2>
+      
+      <div class="prose">
+        <p>I'm an undergraduate student majoring in Mathematics at the University of Michigan and Electrical &amp; Computer Engineering at Shanghai Jiao Tong University. My interests lie in <strong>AI for Scientific Research</strong> — building machine learning methods that help accelerate discovery in the natural sciences — and <strong>Human-Computer Interaction (HCI)</strong>, designing systems that make these tools intuitive and genuinely useful to the people who rely on them.</p>
+      </div>
+    </section>
+
+    <section class="section" id="interests">
+      <h2 class="section-title">Research Interests</h2>
+      <div class="interest-grid">
+        <div class="interest">
+          <span class="interest-icon"><i class="fa-solid fa-flask " aria-hidden="true"></i></span>
+          <span>AI for Scientific Research</span>
+        </div>
+        <div class="interest">
+          <span class="interest-icon"><i class="fa-solid fa-laptop-code " aria-hidden="true"></i></span>
+          <span>Human-Computer Interaction (HCI)</span>
+        </div></div>
+    </section>
+
+    <section class="section" id="education">
+      <h2 class="section-title">Education</h2>
+      <ul class="timeline">
+        <li class="tl-item">
+          <div class="tl-date">Aug 2025 - Present</div>
+          <div class="tl-body">
+            <div class="tl-title">B.S. in Mathematics</div>
+            <div class="tl-sub">University of Michigan, Ann Arbor, USA</div>
+          </div>
+        </li>
+        <li class="tl-item">
+          <div class="tl-date">Aug 2023 - Present</div>
+          <div class="tl-body">
+            <div class="tl-title">B.Eng. in Electrical &amp; Computer Engineering</div>
+            <div class="tl-sub">Shanghai Jiao Tong University, China</div>
+          </div>
+        </li></ul>
+    </section>
+
+    <section class="section" id="experience">
+      <h2 class="section-title">Teaching</h2>
+      <ul class="timeline">
+        <li class="tl-item">
+          <div class="tl-date">2025 SU</div>
+          <div class="tl-body">
+            <div class="tl-title">Teaching Assistant</div>
+            <div class="tl-sub">Shanghai Jiaotong University, China</div>
+            <div class="tl-desc">MATH2550J, Honors Calculus II (<a href="https://github.com/MathematicsJI/MATH2550J" target="_blank" rel="noopener">Course Repo</a>)</div>
+          </div>
+        </li>
+        <li class="tl-item">
+          <div class="tl-date">2024 FA</div>
+          <div class="tl-body">
+            <div class="tl-title">Teaching Assistant</div>
+            <div class="tl-sub">Shanghai Jiaotong University, China</div>
+            <div class="tl-desc">MATH1560J, Honors Calculus I (<a href="https://github.com/MathematicsJI/MATH1560J" target="_blank" rel="noopener">Course Repo</a>)</div>
+          </div>
+        </li></ul>
+    </section>
+
+
+    <section class="section" id="contact">
+      <h2 class="section-title">Contact</h2>
+      
+      <p class="prose">Feel free to reach out at <a href="mailto:chengysh@umich.edu">chengysh@umich.edu</a>.</p>
+      <div class="socials">
+          <a class="social-link" href="https://github.com/ShokuhouMisak1" target="_blank" rel="noopener" aria-label="link"><i class="fa-brands fa-github " aria-hidden="true"></i></a>
+          <a class="social-link" href="mailto:chengysh@umich.edu" target="_blank" rel="noopener" aria-label="link"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a>
+          <a class="social-link" href="https://www.linkedin.com/in/chengyang-shi-91844738b/" target="_blank" rel="noopener" aria-label="link"><i class="fa-brands fa-linkedin " aria-hidden="true"></i></a></div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; Chengyang Shi. Built with a tiny static generator.</p>
+    </div>
+  </footer>
+</body>
+</html>

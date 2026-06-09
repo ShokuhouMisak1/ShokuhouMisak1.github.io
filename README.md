@@ -1,62 +1,58 @@
-# Personal Website
+# Personal Website — Chengyang Shi
 
-A personal academic website built with [Gatsby](https://www.gatsbyjs.com/) and
-the [gatsby-theme-academic](https://www.npmjs.com/package/gatsby-theme-academic)
-theme. Scaffolded from [tc-imba/tc-imba.github.io](https://github.com/tc-imba/tc-imba.github.io)
-as a structural template — this is an independent repository, **not a fork**, so
-none of the original author's content remains.
+A clean, single-page academic website (inspired by the layout of
+[amberljc.github.io](https://amberljc.github.io)). It is a **zero-dependency
+static site**: a small Node script renders [`config.js`](config.js) into a
+self-contained `public/index.html`. No frameworks, no `npm install`.
 
-## What to fill in
+## Edit your content
 
-| File / folder | What it controls |
-| --- | --- |
-| `config.js` | **Main file.** Your name, bio, links, education, experience, awards, tags. Look for `<placeholders>` and replace them. |
-| `static/avatar.png` | Your profile photo (replace this file). |
-| `static/CV.pdf` | Your CV (add this file; the home-page CV icon links to `/CV.pdf`). |
-| `static/favicon.png` / `favicon.ico` | Browser tab icon (replace to taste). |
-| `content/research/*/index.md` | One folder per research project. Duplicate `example-project` for each. |
-| `content/posts/*/index.md` | One folder per blog post. Duplicate `2026-01-01-hello-world`. |
-| `content/tags/*/index.md` | Optional descriptive pages for tags you use. |
-| `gatsby-config.js` | Theme options (Google Analytics id, favicon path). Usually leave as-is. |
+Everything lives in **[`config.js`](config.js)** — name, bio, social links,
+education, interests, and teaching/experience. Edit that file and rebuild.
 
-> **Critical:** in `config.js`, change every `<username>` to your real GitHub
-> username, and set `siteUrl` to `https://<username>.github.io`.
+- Bio paragraphs support inline Markdown: `**bold**` and `[text](url)`.
+- Social icons use [Font Awesome](https://fontawesome.com/icons) (`['fab','github']`,
+  `['fas','envelope']`) and [Academicons](https://jpswalsh.github.io/academicons/)
+  (`['ai','cv']`, `['ai','google-scholar']`).
+- Sections with no content (e.g. `awards`, empty `professions`) are hidden
+  automatically.
 
-## Run locally
+## Your photo & favicon
 
-Requires Node.js 18+ (you have a newer version, which is fine).
+A placeholder avatar (`static/avatar.svg`) ships by default. To use your own
+photo, drop a file at `static/avatar.png` (matching the `avatar` field in
+`config.js`) — the build prefers it automatically. Replace `static/favicon.svg`
+to change the browser tab icon.
 
-```bash
-npm install            # first time only
-npm run develop        # dev server at http://localhost:8000
-npm run build          # production build into ./public
-```
-
-If `npm install` fails while building the native `canvas` dependency on macOS,
-install its system libraries first:
+## Build & preview locally
 
 ```bash
-brew install pkg-config cairo pango libpng jpeg giflib librsvg
+node build.js          # render -> public/
+npm run serve          # build, then preview at http://localhost:8080
 ```
 
-## Publish to GitHub Pages (no fork)
+(`npm run serve` and `npm run dev` are the same; both just run plain Node.)
 
-1. Create a **new** repository on GitHub named exactly `<username>.github.io`
-   (replace `<username>` with your GitHub username). Create it empty — do **not**
-   fork tc-imba's repo.
-2. Push this folder to it:
-   ```bash
-   git remote add origin https://github.com/<username>/<username>.github.io.git
-   git branch -M main
-   git push -u origin main
-   ```
-3. The included GitHub Actions workflow (`.github/workflows/main.yml`) builds the
-   site and pushes the result to a `gh-pages` branch on every push to `main`.
-4. In the repo: **Settings → Pages → Build and deployment → Source: Deploy from a
-   branch**, then select branch **`gh-pages`** and folder **`/ (root)`**. Save.
-5. Your site goes live at `https://<username>.github.io/` after the action finishes
-   (watch the **Actions** tab).
+## Deploy (GitHub Pages)
 
-## License
+Pushing to `main` triggers [.github/workflows/main.yml](.github/workflows/main.yml),
+which builds the site and publishes `public/` to the **`gh-pages`** branch.
 
-The theme and tooling are MIT-licensed. Your content is yours.
+First-time setup:
+
+1. Create a GitHub repo named **`<username>.github.io`** and push this project to
+   `main`. (Update `siteUrl` and your GitHub `social` URL in `config.js` if your
+   username differs.)
+2. In **Settings → Pages**, set the source to the **`gh-pages`** branch.
+3. The site goes live at `https://<username>.github.io`.
+
+## Project layout
+
+```
+config.js                  # ← your content (edit this)
+build.js                   # static-site generator
+serve.js                   # local preview server
+static/                    # assets copied verbatim into the site (avatar, favicon, CV…)
+public/                    # build output (git-ignored)
+.github/workflows/main.yml # build + deploy to gh-pages
+```

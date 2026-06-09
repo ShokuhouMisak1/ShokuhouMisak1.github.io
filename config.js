@@ -81,22 +81,21 @@ module.exports = {
   education: [
     {
       date: 'Aug 2025 - Present',
-      icon: 'Univers',
-      title: '<Degree, e.g. M.S. in Computer Science>',
-      location: 'University of Michigan, USA',
+      icon: 'university',
+      title: 'B.S. in Mathematics',
+      location: 'University of Michigan, Ann Arbor, USA',
     },
     {
       date: 'Aug 2023 - Present',
       icon: 'university',
-      title: '<Bachelor degree>',
-      location: '<Your undergraduate university>',
+      title: 'B.Eng. in Electrical & Computer Engineering',
+      location: 'Shanghai Jiao Tong University, China',
     },
   ],
 
   interests: [
-    { icon: 'code', title: '<Interest 1>' },
-    { icon: 'cubes', title: '<Interest 2>' },
-    { icon: ['fab', 'linux'], title: '<Interest 3>' },
+    { icon: 'flask', title: 'AI for Scientific Research' },
+    { icon: 'laptop-code', title: 'Human-Computer Interaction (HCI)' },
   ],
 
   experience: [

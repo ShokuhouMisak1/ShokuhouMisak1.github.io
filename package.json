@@ -1,21 +1,13 @@
 {
   "name": "personal-website",
   "version": "1.0.0",
-  "description": "Personal academic website built with Gatsby and gatsby-theme-academic",
-  "scripts": {
-    "build": "gatsby build --prefix-paths",
-    "develop": "gatsby develop",
-    "clean": "gatsby clean"
-  },
+  "private": true,
+  "description": "Personal website of Chengyang Shi",
   "author": "Chengyang Shi",
   "license": "MIT",
-  "dependencies": {
-    "gatsby": "^5.12.9",
-    "gatsby-theme-academic": "^2.3.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "devDependencies": {
-    "cross-env": "7.0.3"
+  "scripts": {
+    "build": "node build.js",
+    "serve": "node build.js && node serve.js",
+    "dev": "node build.js && node serve.js"
   }
 }

@@ -16,10 +16,9 @@ module.exports = {
 
   // Each string is one paragraph on the home page. Markdown links work: [text](url)
   introduction: [
-    'I\'m an undergraduate student majoring in Mathematics at the University of Michigan and ECE at Shanghai Jiaotong University. ' +
-    'Write a short bio here describing what you work on and what excites you.',
-    'Add a second paragraph about your research interests, projects, or background. ' +
-    'You can use **bold**, *italic*, and [links](https://example.com).',
+    'I\'m an undergraduate student majoring in Mathematics at the University of Michigan and Electrical & Computer Engineering at Shanghai Jiao Tong University. '
+    + 'My interests lie in **AI for Scientific Research** — building machine learning methods that help accelerate discovery in the natural sciences — and **Human-Computer Interaction (HCI)**, designing systems that make these tools intuitive and genuinely useful to the people who rely on them.',
+    'I\'m especially drawn to the intersection of the two: how intelligent models and thoughtful interface design can work together to change the way researchers explore data, test ideas, and communicate their findings. I love turning ideas into working systems, and I\'m always looking for new things to learn and build.',
   ],
 
   avatar: 'avatar.png', // replace static/avatar.png with your own photo
@@ -52,17 +51,18 @@ module.exports = {
   // Social / external links shown as icons.
   // Icons use Font Awesome: ['fab', 'github'], ['fas', 'envelope'], ['ai', 'cv'] (academicons)
   social: [
+    // {
+    //   url: '/CV.pdf', // add your CV as static/CV.pdf, or remove this entry
+    //   icon: ['ai', 'cv'],
+    // }, 
     {
-      url: '/CV.pdf', // add your CV as static/CV.pdf, or remove this entry
-      icon: ['ai', 'cv'],
-    }, {
       url: 'https://github.com/ShokuhouMisak1',
       icon: ['fab', 'github'],
     }, {
       url: 'mailto:chengysh@umich.edu',
       icon: ['fas', 'envelope'],
     },
-    { url: 'https://www.linkedin.com/in/<you>', icon: ['fab', 'linkedin'] },
+    { url: 'https://www.linkedin.com/in/chengyang-shi-91844738b/', icon: ['fab', 'linkedin'] },
     // { url: 'https://scholar.google.com/citations?user=<id>', icon: ['ai', 'google-scholar'] },
   ],
 
@@ -102,18 +102,18 @@ module.exports = {
   ],
 
   experience: [
-    {
-      title: 'Work',
-      position: 'left',
-      data: [
-        {
-          date: '20XX - Present',
-          title: '<Job title>',
-          location: '<Company / Lab>',
-          description: '<What you did>',
-        },
-      ],
-    },
+    //{
+      // title: 'Work',
+      // position: 'left',
+      // data: [
+      //   {
+      //     date: '20XX - Present',
+      //     title: '<Job title>',
+      //     location: '<Company / Lab>',
+      //     description: '<What you did>',
+      //   },
+      // ],
+    //},
     {
       title: 'Teaching',
       position: 'right',
@@ -122,25 +122,25 @@ module.exports = {
           date: '2025 SU',
           title: 'Teaching Assistant',
           // The description renders Markdown, so [text](url) becomes a real link.
-          description: 'MATH2550J, Honors Calculus II ([course repo](https://github.com/your-username/math2550j))',
+          description: 'MATH2550J, Honors Calculus II ([course repo](https://github.com/MathematicsJI/MATH2550J))',
           location: 'Shanghai Jiaotong University, China',
         },
         {
           date: '2024 FA',
           title: 'Teaching Assistant',
-          description: 'MATH1560J, Honors Calculus I',
+          description: 'MATH1560J, Honors Calculus I ([course repo](https://github.com/MathematicsJI/MATH1560J))',
           location: 'Shanghai Jiaotong University, China',
         },
       ],
     },
   ],
 
-  awards: [
-    {
-      date: '<Month Year>',
-      title: '<Award name>',
-    },
-  ],
+  // awards: [
+  //   {
+  //     date: '<Month Year>',
+  //     title: '<Award name>',
+  //   },
+  // ],
 
   // ----- Tag styling (used by blog posts & research) -----------------------
   tagColors: [
@@ -153,73 +153,73 @@ module.exports = {
   // build crashes. Keep all nine; edit their text/colors freely. You can add
   // your own tags too (extra entries without a theme image just won't get a
   // card on the /tags page, which is fine).
-  tags: [
-    {
-      id: 'javascript',
-      name: 'javascript',
-      description: 'JavaScript is an object-oriented language used with HTML and CSS to add behavior to web pages.',
-      color: '#f0da50',
-    },
-    {
-      id: 'nodejs',
-      name: 'Node.js',
-      description: 'Node.js is a runtime for executing JavaScript outside the browser.',
-      color: '#90c53f',
-    },
-    {
-      id: 'rxjs',
-      name: 'RxJS',
-      description: 'RxJS is a library for reactive programming using Observables.',
-      color: '#eb428e',
-    },
-    {
-      id: 'typescript',
-      name: 'typescript',
-      description: 'TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.',
-      color: '#257acc',
-    },
-    {
-      id: 'reactjs',
-      name: 'reactjs',
-      description: 'React is a JavaScript library for building user interfaces.',
-      color: '#61dbfa',
-    },
-    {
-      id: 'gatsby',
-      name: 'Gatsby.js',
-      description: 'A React-based framework for generating static web sites.',
-      color: '#6f309f',
-    },
-    {
-      id: 'html',
-      name: 'HTML',
-      description: 'The markup language that structures content on the web.',
-      color: '#dd3431',
-    },
-    {
-      id: 'css',
-      name: 'css',
-      description: 'CSS styles HTML elements and controls the look of a web page.',
-      color: '#43ace0',
-    },
-    {
-      id: 'python',
-      name: 'python',
-      description: 'A general-purpose programming language widely used across many domains.',
-      color: '#f9c646',
-    },
-    // ---- Your own tags below (used by content; no /tags card needed) ----
-    {
-      id: 'example',
-      name: 'example',
-      description: 'An example tag. Add your own tags here.',
-      color: '#9254de',
-    },
-    {
-      id: 'blog',
-      name: 'blog',
-      description: 'Blog posts.',
-      color: '#13c2c2',
-    },
-  ],
+  // tags: [
+  //   {
+  //     id: 'javascript',
+  //     name: 'javascript',
+  //     description: 'JavaScript is an object-oriented language used with HTML and CSS to add behavior to web pages.',
+  //     color: '#f0da50',
+  //   },
+  //   {
+  //     id: 'nodejs',
+  //     name: 'Node.js',
+  //     description: 'Node.js is a runtime for executing JavaScript outside the browser.',
+  //     color: '#90c53f',
+  //   },
+  //   {
+  //     id: 'rxjs',
+  //     name: 'RxJS',
+  //     description: 'RxJS is a library for reactive programming using Observables.',
+  //     color: '#eb428e',
+  //   },
+  //   {
+  //     id: 'typescript',
+  //     name: 'typescript',
+  //     description: 'TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.',
+  //     color: '#257acc',
+  //   },
+  //   {
+  //     id: 'reactjs',
+  //     name: 'reactjs',
+  //     description: 'React is a JavaScript library for building user interfaces.',
+  //     color: '#61dbfa',
+  //   },
+  //   {
+  //     id: 'gatsby',
+  //     name: 'Gatsby.js',
+  //     description: 'A React-based framework for generating static web sites.',
+  //     color: '#6f309f',
+  //   },
+  //   {
+  //     id: 'html',
+  //     name: 'HTML',
+  //     description: 'The markup language that structures content on the web.',
+  //     color: '#dd3431',
+  //   },
+  //   {
+  //     id: 'css',
+  //     name: 'css',
+  //     description: 'CSS styles HTML elements and controls the look of a web page.',
+  //     color: '#43ace0',
+  //   },
+  //   {
+  //     id: 'python',
+  //     name: 'python',
+  //     description: 'A general-purpose programming language widely used across many domains.',
+  //     color: '#f9c646',
+  //   },
+  //   // ---- Your own tags below (used by content; no /tags card needed) ----
+  //   {
+  //     id: 'example',
+  //     name: 'example',
+  //     description: 'An example tag. Add your own tags here.',
+  //     color: '#9254de',
+  //   },
+  //   {
+  //     id: 'blog',
+  //     name: 'blog',
+  //     description: 'Blog posts.',
+  //     color: '#13c2c2',
+  //   },
+  // ],
 };

@@ -6,8 +6,9 @@
 
 module.exports = {
   pathPrefix: '', // keep '' for a <username>.github.io site
-  // IMPORTANT: change <username> to your GitHub username (must match repo name)
-  siteUrl: 'https://<username>.github.io',
+  // IMPORTANT: replace `your-username` with your real GitHub username.
+  // (Don't use < > brackets here — they make the URL invalid and break the build.)
+  siteUrl: 'https://your-username.github.io',
   title: 'Chengyang Shi',
   description: 'Personal Website of Chengyang Shi',
   author: 'Chengyang Shi',
@@ -55,7 +56,7 @@ module.exports = {
       url: '/CV.pdf', // add your CV as static/CV.pdf, or remove this entry
       icon: ['ai', 'cv'],
     }, {
-      url: 'https://github.com/<username>',
+      url: 'https://github.com/your-username',
       icon: ['fab', 'github'],
     }, {
       url: 'mailto:chengysh@umich.edu',
@@ -139,18 +140,79 @@ module.exports = {
     'magenta', 'red', 'volcano', 'orange', 'gold',
     'lime', 'green', 'cyan', 'blue', 'geekblue', 'purple',
   ],
+  // NOTE: The /tags page renders one card per tag image that ships with the
+  // theme (css, gatsby, html, javascript, nodejs, python, reactjs, rxjs,
+  // typescript). Each of those names MUST have a matching entry below or the
+  // build crashes. Keep all nine; edit their text/colors freely. You can add
+  // your own tags too (extra entries without a theme image just won't get a
+  // card on the /tags page, which is fine).
   tags: [
+    {
+      id: 'javascript',
+      name: 'javascript',
+      description: 'JavaScript is an object-oriented language used with HTML and CSS to add behavior to web pages.',
+      color: '#f0da50',
+    },
+    {
+      id: 'nodejs',
+      name: 'Node.js',
+      description: 'Node.js is a runtime for executing JavaScript outside the browser.',
+      color: '#90c53f',
+    },
+    {
+      id: 'rxjs',
+      name: 'RxJS',
+      description: 'RxJS is a library for reactive programming using Observables.',
+      color: '#eb428e',
+    },
+    {
+      id: 'typescript',
+      name: 'typescript',
+      description: 'TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.',
+      color: '#257acc',
+    },
+    {
+      id: 'reactjs',
+      name: 'reactjs',
+      description: 'React is a JavaScript library for building user interfaces.',
+      color: '#61dbfa',
+    },
+    {
+      id: 'gatsby',
+      name: 'Gatsby.js',
+      description: 'A React-based framework for generating static web sites.',
+      color: '#6f309f',
+    },
+    {
+      id: 'html',
+      name: 'HTML',
+      description: 'The markup language that structures content on the web.',
+      color: '#dd3431',
+    },
+    {
+      id: 'css',
+      name: 'css',
+      description: 'CSS styles HTML elements and controls the look of a web page.',
+      color: '#43ace0',
+    },
+    {
+      id: 'python',
+      name: 'python',
+      description: 'A general-purpose programming language widely used across many domains.',
+      color: '#f9c646',
+    },
+    // ---- Your own tags below (used by content; no /tags card needed) ----
     {
       id: 'example',
       name: 'example',
       description: 'An example tag. Add your own tags here.',
-      color: '#6f309f',
+      color: '#9254de',
     },
     {
       id: 'blog',
       name: 'blog',
       description: 'Blog posts.',
-      color: '#43ace0',
+      color: '#13c2c2',
     },
   ],
 };

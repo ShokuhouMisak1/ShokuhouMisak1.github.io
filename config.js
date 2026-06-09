@@ -18,14 +18,12 @@ module.exports = {
   introduction: [
     'I\'m an undergraduate student majoring in Mathematics at the University of Michigan and Electrical & Computer Engineering at Shanghai Jiao Tong University. '
     + 'My interests lie in **AI for Scientific Research** — building machine learning methods that help accelerate discovery in the natural sciences — and **Human-Computer Interaction (HCI)**, designing systems that make these tools intuitive and genuinely useful to the people who rely on them.',
-    'I\'m especially drawn to the intersection of the two: how intelligent models and thoughtful interface design can work together to change the way researchers explore data, test ideas, and communicate their findings. I love turning ideas into working systems, and I\'m always looking for new things to learn and build.',
   ],
 
   avatar: 'avatar.png', // replace static/avatar.png with your own photo
-  professions: [
-    'Student',
-    'Developer',
-  ],
+  // The theme requires this field to exist and renders it under your name.
+  // Empty array = no subtitle shown. Add strings (e.g. 'Student') to show them.
+  professions: [],
   birthday: '', // optional, e.g. 'January 1, 2000'; leave '' to hide
   location: 'Ann Arbor, MI, USA',
   email: 'chengysh@umich.edu',
@@ -102,18 +100,18 @@ module.exports = {
   ],
 
   experience: [
-    //{
-      // title: 'Work',
-      // position: 'left',
-      // data: [
-      //   {
-      //     date: '20XX - Present',
-      //     title: '<Job title>',
-      //     location: '<Company / Lab>',
-      //     description: '<What you did>',
-      //   },
-      // ],
-    //},
+    {
+      title: 'Work',
+      position: 'left',
+      data: [
+        {
+          date: '20XX - Present',
+          title: '<Job title>',
+          location: '<Company / Lab>',
+          description: '<What you did>',
+        },
+      ],
+    },
     {
       title: 'Teaching',
       position: 'right',
@@ -122,13 +120,13 @@ module.exports = {
           date: '2025 SU',
           title: 'Teaching Assistant',
           // The description renders Markdown, so [text](url) becomes a real link.
-          description: 'MATH2550J, Honors Calculus II ([course repo](https://github.com/MathematicsJI/MATH2550J))',
+          description: 'MATH2550J, Honors Calculus II ([Course Repo](https://github.com/MathematicsJI/MATH2550J))',
           location: 'Shanghai Jiaotong University, China',
         },
         {
           date: '2024 FA',
           title: 'Teaching Assistant',
-          description: 'MATH1560J, Honors Calculus I ([course repo](https://github.com/MathematicsJI/MATH1560J))',
+          description: 'MATH1560J, Honors Calculus I ([Course Repo](https://github.com/MathematicsJI/MATH1560J))',
           location: 'Shanghai Jiaotong University, China',
         },
       ],

@@ -14,3 +14,20 @@ exports.onCreatePage = ({ page, actions }) => {
     deletePage(page);
   }
 };
+
+// Explicitly type optional siteMetadata fields.
+//
+// The theme's useSiteMetadata hook queries a fixed list of fields. Gatsby infers
+// the schema from config.js, so a field that is empty (e.g. `professions: []`)
+// or omitted has no inferable type and the query fails with
+// "Cannot query field <x> on type SiteSiteMetadata". Declaring the types here
+// lets those fields be empty/absent without breaking the build. These extra
+// type definitions merge with Gatsby's inference for everything else.
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions;
+  createTypes(`
+    type SiteSiteMetadata {
+      professions: [String]
+    }
+  `);
+};

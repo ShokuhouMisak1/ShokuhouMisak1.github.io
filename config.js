@@ -100,20 +100,23 @@ module.exports = {
   ],
 
   experience: [
-    {
-      title: 'Work',
-      position: 'left',
-      data: [
-        {
-          date: '20XX - Present',
-          title: '<Job title>',
-          location: '<Company / Lab>',
-          description: '<What you did>',
-        },
-      ],
-    },
+    // Work hidden for now — uncomment to restore:
+    // {
+    //   title: 'Work',
+    //   position: 'left',
+    //   data: [
+    //     {
+    //       date: '20XX - Present',
+    //       title: '<Job title>',
+    //       location: '<Company / Lab>',
+    //       description: '<What you did>',
+    //     },
+    //   ],
+    // },
     {
       title: 'Teaching',
+      // `position` is ignored now: the experience page is shadowed to show a
+      // single centered column (see src/gatsby-theme-academic/pages/experience).
       position: 'right',
       data: [
         {

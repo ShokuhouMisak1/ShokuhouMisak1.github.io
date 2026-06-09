@@ -5,7 +5,7 @@ tags:
 date: Jan 2026 - Present
 path: "research/example-project"
 excerpt: "A one-paragraph summary of this project. Replace this whole folder with your own work, one folder per project."
-selected: true
+# selected: true   # commented out -> hidden from the home page "Selected Research" section; uncomment to feature it
 cover: "./preview.png"
 links:
   - name: "GitHub"

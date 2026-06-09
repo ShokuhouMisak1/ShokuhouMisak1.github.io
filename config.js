@@ -8,7 +8,7 @@ module.exports = {
   pathPrefix: '', // keep '' for a <username>.github.io site
   // IMPORTANT: replace `your-username` with your real GitHub username.
   // (Don't use < > brackets here — they make the URL invalid and break the build.)
-  siteUrl: 'https://your-username.github.io',
+  siteUrl: 'https://ShokuhouMisak1.github.io',
   title: 'Chengyang Shi',
   description: 'Personal Website of Chengyang Shi',
   author: 'Chengyang Shi',
@@ -16,7 +16,7 @@ module.exports = {
 
   // Each string is one paragraph on the home page. Markdown links work: [text](url)
   introduction: [
-    'I\'m a <YOUR ROLE, e.g. graduate student> at the University of Michigan. ' +
+    'I\'m an undergraduate student majoring in Mathematics at the University of Michigan and ECE at Shanghai Jiaotong University. ' +
     'Write a short bio here describing what you work on and what excites you.',
     'Add a second paragraph about your research interests, projects, or background. ' +
     'You can use **bold**, *italic*, and [links](https://example.com).',
@@ -56,13 +56,13 @@ module.exports = {
       url: '/CV.pdf', // add your CV as static/CV.pdf, or remove this entry
       icon: ['ai', 'cv'],
     }, {
-      url: 'https://github.com/your-username',
+      url: 'https://github.com/ShokuhouMisak1',
       icon: ['fab', 'github'],
     }, {
       url: 'mailto:chengysh@umich.edu',
       icon: ['fas', 'envelope'],
     },
-    // { url: 'https://www.linkedin.com/in/<you>', icon: ['fab', 'linkedin'] },
+    { url: 'https://www.linkedin.com/in/<you>', icon: ['fab', 'linkedin'] },
     // { url: 'https://scholar.google.com/citations?user=<id>', icon: ['ai', 'google-scholar'] },
   ],
 
@@ -82,13 +82,13 @@ module.exports = {
   // ----- Resume page data --------------------------------------------------
   education: [
     {
-      date: 'Sept 20XX - Present',
-      icon: 'graduation-cap',
+      date: 'Aug 2025 - Present',
+      icon: 'Univers',
       title: '<Degree, e.g. M.S. in Computer Science>',
       location: 'University of Michigan, USA',
     },
     {
-      date: 'Sept 20XX - June 20XX',
+      date: 'Aug 2023 - Present',
       icon: 'university',
       title: '<Bachelor degree>',
       location: '<Your undergraduate university>',
@@ -119,10 +119,17 @@ module.exports = {
       position: 'right',
       data: [
         {
-          date: '<Term Year>',
+          date: '2025 SU',
           title: 'Teaching Assistant',
-          description: '<Course code and name>',
-          location: 'University of Michigan, USA',
+          // The description renders Markdown, so [text](url) becomes a real link.
+          description: 'MATH2550J, Honors Calculus II ([course repo](https://github.com/your-username/math2550j))',
+          location: 'Shanghai Jiaotong University, China',
+        },
+        {
+          date: '2024 FA',
+          title: 'Teaching Assistant',
+          description: 'MATH1560J, Honors Calculus I',
+          location: 'Shanghai Jiaotong University, China',
         },
       ],
     },

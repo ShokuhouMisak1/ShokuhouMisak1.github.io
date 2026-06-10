@@ -1,8 +1,7 @@
 # Personal Website — Chengyang Shi
 
-A clean, single-page academic website (inspired by the layout of
-[amberljc.github.io](https://amberljc.github.io)). It is a **zero-dependency
-static site**: a small Node script renders [`config.js`](config.js) into a
+A clean, single-page academic website. It is a **zero-dependency static
+site**: a small Node script renders [`config.js`](config.js) into a
 self-contained `public/index.html`. No frameworks, no `npm install`.
 
 ## Edit your content

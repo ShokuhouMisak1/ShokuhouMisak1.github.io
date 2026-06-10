@@ -268,17 +268,14 @@ a:hover{text-decoration:underline}
 .nav-links a{color:var(--muted);font-size:14px;font-weight:500;letter-spacing:.01em}
 .nav-links a:hover{color:var(--accent);text-decoration:none}
 
-/* content card on the warm base */
-.container{max-width:var(--maxw);margin:30px auto 26px;background:var(--card);
-  border:1px solid var(--card-line);border-radius:18px;
-  box-shadow:0 1px 2px rgba(31,35,40,.04),0 22px 48px -18px rgba(31,35,40,.16);
-  padding:16px 54px 42px}
+/* content sits directly on the light base — no card */
+.container{max-width:var(--maxw);margin:0 auto;padding:10px 28px 28px}
 
 /* hero */
-.hero{display:flex;gap:36px;align-items:center;padding:36px 0 32px;scroll-margin-top:78px}
+.hero{display:flex;gap:36px;align-items:center;padding:40px 0 34px;scroll-margin-top:78px}
 .avatar{width:166px;height:166px;border-radius:50%;object-fit:cover;
-  border:4px solid #fff;outline:1px solid var(--line);
-  box-shadow:0 8px 26px -6px rgba(31,35,40,.22);flex:none;background:#eee}
+  border:1px solid var(--line);box-shadow:0 6px 22px -8px rgba(31,35,40,.25);
+  flex:none;background:#eee}
 .hero-text{min-width:0}
 .name{margin:0 0 7px;font-family:var(--serif);font-size:40px;font-weight:600;
   letter-spacing:-.015em;line-height:1.08;color:var(--fg)}
@@ -331,8 +328,8 @@ a:hover{text-decoration:underline}
 @media (max-width:680px){
   body{font-size:16px}
   .nav-inner{padding:12px 18px}
-  .container{margin:16px 14px 20px;padding:8px 22px 26px;border-radius:14px}
-  .hero{flex-direction:column;text-align:center;gap:18px;padding:26px 0 24px}
+  .container{padding:6px 20px 24px}
+  .hero{flex-direction:column;text-align:center;gap:18px;padding:28px 0 26px}
   .avatar{width:132px;height:132px}
   .meta,.socials,.interest-grid{justify-content:center}
   .name{font-size:31px}

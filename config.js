@@ -17,7 +17,7 @@ module.exports = {
   // Each string is one paragraph on the home page. Markdown links work: [text](url)
   introduction: [
     'I\'m an undergraduate student majoring in Mathematics at the University of Michigan and Electrical & Computer Engineering at Shanghai Jiao Tong University. '
-    + 'My interests lie in **AI for Scientific Research** — building machine learning methods that help accelerate discovery in the natural sciences — and **Human-Computer Interaction (HCI)**, designing systems that make these tools intuitive and genuinely useful to the people who rely on them.',
+    + 'I work on **AutoResearch** — autonomous research systems in which AI agents carry out the scientific process end to end: forming hypotheses, designing and running experiments, and building on their own results.',
   ],
 
   avatar: 'avatar.png', // replace static/avatar.png with your own photo
@@ -94,8 +94,8 @@ module.exports = {
   ],
 
   interests: [
-    { icon: 'flask', title: 'AI for Scientific Research' },
-    { icon: 'laptop-code', title: 'Human-Computer Interaction (HCI)' },
+    { icon: 'robot', title: 'AutoResearch (Autonomous Research Systems)' },
+    { icon: 'flask', title: 'AI for Scientific Discovery' },
   ],
 
   experience: [

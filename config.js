@@ -16,8 +16,11 @@ module.exports = {
 
   // Each string is one paragraph on the home page. Markdown links work: [text](url)
   introduction: [
-    'I\'m an undergraduate student majoring in Mathematics at the University of Michigan and Electrical & Computer Engineering at Shanghai Jiao Tong University. '
-    + 'I work on **AutoResearch** — autonomous research systems in which AI agents carry out the scientific process end to end: forming hypotheses, designing and running experiments, and building on their own results.',
+    'I\'m an undergraduate student majoring in Mathematics and Computer Science at the University of Michigan and Electrical & Computer Engineering at Shanghai Jiao Tong University. '
+    + 'My interests lie in **AI for Scientific Research**, especially **Autoresearch**, where AI agents carry out the research loop themselves, from forming hypotheses to running experiments, '
+    + 'and **LLM Evaluation**, which measures whether what these agents claim is actually earned.',
+    'My recent work, [Open-Endedness Bench](https://arxiv.org/abs/2610.02588), evaluates research agents by reading their full records and checking each conclusion against what actually ran, rather than grading only the final score. '
+    + 'I want to keep building evaluations like this, so that progress in automated research is something we can trust.',
   ],
 
   avatar: 'avatar.png', // replace static/avatar.png with your own photo
@@ -49,10 +52,10 @@ module.exports = {
   // Social / external links shown as icons.
   // Icons use Font Awesome: ['fab', 'github'], ['fas', 'envelope'], ['ai', 'cv'] (academicons)
   social: [
-    // {
-    //   url: '/CV.pdf', // add your CV as static/CV.pdf, or remove this entry
-    //   icon: ['ai', 'cv'],
-    // }, 
+    {
+      url: 'CV.pdf', // static/CV.pdf; also linked as "CV" in the top nav
+      icon: ['ai', 'cv'],
+    },
     {
       url: 'https://github.com/ShokuhouMisak1',
       icon: ['fab', 'github'],
@@ -61,7 +64,7 @@ module.exports = {
       icon: ['fas', 'envelope'],
     },
     { url: 'https://www.linkedin.com/in/chengyang-shi-91844738b/', icon: ['fab', 'linkedin'] },
-    // { url: 'https://scholar.google.com/citations?user=<id>', icon: ['ai', 'google-scholar'] },
+    { url: 'https://scholar.google.com/citations?user=Ya1cdNUAAAAJ&hl=en', icon: ['ai', 'google-scholar'] },
   ],
 
   // Optional WakaTime coding-stats widget. Remove this block if you don't use WakaTime.
@@ -77,12 +80,75 @@ module.exports = {
   contactFormUrl: process.env.CONTACT_FORM_ENDPOINT || '',
   googleAnalyticTrackingId: process.env.GA_TRACKING_ID || '',
 
+  // ----- Publications ------------------------------------------------------
+  // Newest first. Your own name (config.author) is bolded automatically.
+  // `url` links the title; `links` render as small buttons under the entry.
+  scholarUrl: 'https://scholar.google.com/citations?user=Ya1cdNUAAAAJ&hl=en',
+  publications: [
+    {
+      title: 'Open-Endedness Bench: Measuring Epistemic Process from Agent Records',
+      url: 'https://arxiv.org/abs/2610.02588',
+      authors: ['Chengyang Shi', 'Xianglin Ji', 'Jintao Huang', 'Jicheng Wang', 'Yifeng He', 'Jiachen Liu'],
+      venue: 'Under review at ICLR 2027',
+      links: [
+        { label: 'arXiv', url: 'https://arxiv.org/abs/2610.02588' },
+        { label: 'Code', url: 'https://github.com/ARA-Labs/oeb' },
+        { label: 'Data', url: 'https://huggingface.co/datasets/AgentNativeResearchLab/oeb-scored-runs' },
+        { label: 'Blog', url: 'https://www.agenticresearch.sh/blog/science-in-broad-daylight' },
+      ],
+    },
+    {
+      title: 'A11yLTLNav: Automatic Detection of Accessibility Navigation Failures',
+      url: 'https://arxiv.org/abs/2609.17959',
+      authors: ['Chenming Ge', 'Kewen Peng', 'Chengyang Shi', 'Ben Greenman', 'Yue Jiang'],
+      venue: 'Under review at CHI 2027',
+      links: [
+        { label: 'arXiv', url: 'https://arxiv.org/abs/2609.17959' },
+      ],
+    },
+    {
+      title: 'The Greatness of Science Cannot Be Planned: Agentic Auto-Research is Fuzz Testing',
+      url: 'https://arxiv.org/abs/2608.09855',
+      authors: ['Yifeng He', 'Jicheng Wang', 'Yinzhe Zhao', 'Chengyang Shi', 'Jiachen Liu', 'Hao Chen'],
+      venue: 'arXiv preprint, 2026',
+      links: [
+        { label: 'arXiv', url: 'https://arxiv.org/abs/2608.09855' },
+        { label: 'Blog', url: 'https://www.agenticresearch.sh/blog/the-goal-of-science-is-not-to-win' },
+      ],
+    },
+  ],
+
+  // ----- Blog posts (external) ---------------------------------------------
+  posts: [
+    {
+      title: 'Science in Broad Daylight',
+      url: 'https://www.agenticresearch.sh/blog/science-in-broad-daylight',
+      date: 'October 2, 2026',
+      authors: ['Chengyang Shi', 'Xianglin Ji', 'Jintao Huang', 'Jicheng Wang', 'Yifeng He', 'Jiachen Liu'],
+      summary: 'AI agents are the first researchers to show all their work, and we still grade them on the answer.',
+    },
+    {
+      title: 'The Goal of Science Is Not to Win',
+      url: 'https://www.agenticresearch.sh/blog/the-goal-of-science-is-not-to-win',
+      date: 'August 19, 2026',
+      authors: ['Yifeng He', 'Jicheng Wang', 'Yinzhe Zhao', 'Chengyang Shi', 'Jiachen Liu', 'Hao Chen'],
+      summary: 'Before AI can discover what humanity does not know, it must first learn to discover what it does not know.',
+    },
+    {
+      title: 'AI Should Build Its Own Research World Model',
+      url: 'https://www.agenticresearch.sh/blog/research-world-model',
+      date: 'July 1, 2026',
+      authors: ['Chengyang Shi', 'Xianglin Ji', 'Jiachen Liu'],
+      summary: 'Opus 4.8 cleared ARC-AGI’s final level in one shot.',
+    },
+  ],
+
   // ----- Resume page data --------------------------------------------------
   education: [
     {
       date: 'Aug 2025 - Present',
       icon: 'university',
-      title: 'B.S. in Mathematics',
+      title: 'B.S. in Mathematics and Computer Science',
       location: 'University of Michigan, Ann Arbor, USA',
     },
     {
@@ -94,8 +160,9 @@ module.exports = {
   ],
 
   interests: [
-    { icon: 'robot', title: 'AutoResearch (Autonomous Research Systems)' },
-    { icon: 'flask', title: 'AI for Scientific Discovery' },
+    { icon: 'flask', title: 'AI for Scientific Research' },
+    { icon: 'robot', title: 'Autoresearch' },
+    { icon: 'scale-balanced', title: 'LLM Evaluation' },
   ],
 
   experience: [

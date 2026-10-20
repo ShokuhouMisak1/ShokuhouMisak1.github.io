@@ -7,7 +7,13 @@ self-contained `public/index.html`. No frameworks, no `npm install`.
 ## Edit your content
 
 Everything lives in **[`config.js`](config.js)** — name, bio, social links,
-education, interests, and teaching/experience. Edit that file and rebuild.
+publications, blog posts, education, interests, and teaching/experience. Edit
+that file and rebuild.
+
+- `publications`: newest first; each has `title`, `url`, `authors`, `venue`
+  and optional `links` (`{ label, url }` buttons). Your own name is bolded.
+- `posts`: external blog posts shown as cards (`title`, `url`, `date`,
+  `authors`, `summary`).
 
 - Bio paragraphs support inline Markdown: `**bold**` and `[text](url)`.
 - Social icons use [Font Awesome](https://fontawesome.com/icons) (`['fab','github']`,

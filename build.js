@@ -54,6 +54,13 @@ const isReal = (s) => typeof s === 'string' && s.trim() && !s.includes('<') ;
 
 // ---------- section renderers ------------------------------------------------
 
+// Author list with your own name (config.author) in bold.
+function renderAuthors(authors = []) {
+  return authors.map((a) => (a === config.author ? `<b>${esc(a)}</b>` : esc(a))).join(', ');
+}
+
+const extLink = (url, inner, cls = '') => `<a${cls ? ` class="${cls}"` : ''} href="${esc(url)}" target="_blank" rel="noopener">${inner}</a>`;
+
 function renderHeader() {
   const avatarFile = fs.existsSync(path.join(STATIC, config.avatar)) ? config.avatar : 'avatar.svg';
   const professions = (config.professions || []).filter(isReal);
@@ -85,73 +92,105 @@ function renderHeader() {
 function renderAbout() {
   const paras = (config.introduction || []).filter(isReal);
   if (!paras.length) return '';
-  return section('about', 'About', `
-      <div class="prose">
-        ${paras.map((p) => `<p>${md(p)}</p>`).join('\n        ')}
-      </div>`);
+  const invite = isReal(config.email)
+    ? `<p class="invite">I am always glad to talk about research. Feel free to reach out by <a href="mailto:${esc(config.email)}">email</a>.</p>`
+    : '';
+  return `
+    <section class="bio" id="about">
+      ${paras.map((p) => `<p>${md(p)}</p>`).join('\n      ')}
+      ${invite}
+    </section>`;
 }
 
 function renderInterests() {
   const items = (config.interests || []).filter((i) => isReal(i.title));
   if (!items.length) return '';
-  const cards = items.map((i) => `
-        <div class="interest">
-          <span class="interest-icon">${iconTag(i.icon)}</span>
-          <span>${esc(i.title)}</span>
-        </div>`).join('');
-  return section('interests', 'Research Interests', `<div class="interest-grid">${cards}</div>`);
+  const pills = items.map((i) => `
+        <span class="interest">${iconTag(i.icon)}${esc(i.title)}</span>`).join('');
+  return section('interests', 'Research Interests', 'compass', `<div class="interest-grid">${pills}
+      </div>`);
+}
+
+function renderPublications() {
+  const items = (config.publications || []).filter((p) => isReal(p.title));
+  if (!items.length) return '';
+  const rows = items.map((p) => {
+    const title = p.url ? extLink(p.url, esc(p.title)) : esc(p.title);
+    const links = (p.links || []).map((l) => extLink(l.url, esc(l.label))).join('');
+    return `
+      <article class="pub">
+        <h3>${title}</h3>
+        <p class="authors">${renderAuthors(p.authors)}</p>
+        ${isReal(p.venue) ? `<p class="venue">${esc(p.venue)}</p>` : ''}
+        ${links ? `<p class="plinks">${links}</p>` : ''}
+      </article>`;
+  }).join('');
+  const more = config.scholarUrl
+    ? `<p class="more-note">Full list on ${extLink(config.scholarUrl, 'Google Scholar')}</p>`
+    : '';
+  return section('publications', 'Publications', 'file-lines', `${rows}${more}`);
+}
+
+function renderPosts() {
+  const items = (config.posts || []).filter((p) => isReal(p.title));
+  if (!items.length) return '';
+  const cards = items.map((p) => `
+      <a class="note" href="${esc(p.url)}" target="_blank" rel="noopener">
+        <div class="nt">${esc(p.title)}</div>
+        <div class="nd">${esc(p.date)}</div>
+        ${p.authors && p.authors.length ? `<div class="na">${renderAuthors(p.authors)}</div>` : ''}
+        ${isReal(p.summary) ? `<div class="ns">${esc(p.summary)}</div>` : ''}
+      </a>`).join('');
+  return section('blog', 'Blog', 'pen-nib', `<div class="postlist">${cards}</div>`);
+}
+
+// One row: title + subtitle + optional description, with the date on the right.
+function row({ date, title, sub, desc }) {
+  return `
+      <div class="xr">
+        <div>
+          <div class="org2">${md(title)}</div>
+          ${isReal(sub) ? `<div class="role">${esc(sub)}</div>` : ''}
+          ${isReal(desc) ? `<div class="d">${md(desc)}</div>` : ''}
+        </div>
+        <div class="when">${esc(date)}</div>
+      </div>`;
 }
 
 function renderEducation() {
   const items = (config.education || []).filter((e) => isReal(e.title));
   if (!items.length) return '';
-  const rows = items.map((e) => `
-        <li class="tl-item">
-          <div class="tl-date">${esc(e.date)}</div>
-          <div class="tl-body">
-            <div class="tl-title">${esc(e.title)}</div>
-            <div class="tl-sub">${esc(e.location)}</div>
-          </div>
-        </li>`).join('');
-  return section('education', 'Education', `<ul class="timeline">${rows}</ul>`);
+  const rows = items.map((e) => row({ date: e.date, title: e.title, sub: e.location })).join('');
+  return section('education', 'Education', 'graduation-cap', rows);
 }
 
 function renderExperience() {
   const groups = (config.experience || []).filter((g) => g && Array.isArray(g.data) && g.data.length);
   if (!groups.length) return '';
   const blocks = groups.map((g) => {
-    const rows = g.data.map((d) => `
-        <li class="tl-item">
-          <div class="tl-date">${esc(d.date)}</div>
-          <div class="tl-body">
-            <div class="tl-title">${esc(d.title)}</div>
-            ${isReal(d.location) ? `<div class="tl-sub">${esc(d.location)}</div>` : ''}
-            ${isReal(d.description) ? `<div class="tl-desc">${md(d.description)}</div>` : ''}
-          </div>
-        </li>`).join('');
-    const heading = groups.length > 1 ? `<h3 class="subhead">${esc(g.title)}</h3>` : '';
-    return `${heading}<ul class="timeline">${rows}</ul>`;
+    const rows = g.data.map((d) => row({
+      date: d.date, title: d.title, sub: d.location, desc: d.description,
+    })).join('');
+    const heading = groups.length > 1 ? `<h3 class="grp">${esc(g.title)}</h3>` : '';
+    return `${heading}${rows}`;
   }).join('\n');
   // When there is a single group (e.g. "Teaching"), use its name as the section title.
   const title = groups.length === 1 ? esc(groups[0].title) : 'Experience';
-  return section('experience', title, blocks);
+  const icon = /teach/i.test(title) ? 'chalkboard-user' : 'briefcase';
+  return section('experience', title, icon, blocks);
 }
 
 function renderAwards() {
   const items = (config.awards || []).filter((a) => isReal(a.title));
   if (!items.length) return '';
-  const rows = items.map((a) => `
-        <li class="tl-item">
-          <div class="tl-date">${esc(a.date)}</div>
-          <div class="tl-body"><div class="tl-title">${md(a.title)}</div></div>
-        </li>`).join('');
-  return section('awards', 'Awards', `<ul class="timeline">${rows}</ul>`);
+  const rows = items.map((a) => row({ date: a.date, title: a.title })).join('');
+  return section('awards', 'Awards', 'award', rows);
 }
 
-function section(id, title, inner) {
+function section(id, title, icon, inner) {
   return `
-    <section class="section" id="${id}">
-      <h2 class="section-title">${title}</h2>
+    <section id="${id}">
+      <h2 class="sec">${iconTag(icon)}${title}</h2>
       ${inner}
     </section>`;
 }
@@ -159,21 +198,38 @@ function section(id, title, inner) {
 // ---------- navigation -------------------------------------------------------
 
 function renderNav(sections) {
-  const links = sections.map((s) => `<a href="#${s.id}">${s.label}</a>`).join('');
+  const links = sections.map((s) => `<a href="#${s.id}">${s.label}</a>`).join('')
+    + (fs.existsSync(path.join(STATIC, 'CV.pdf')) ? '<a href="./CV.pdf" target="_blank" rel="noopener">CV</a>' : '');
   return `
-    <nav class="nav">
-      <div class="nav-inner">
-        <a class="nav-brand" href="#top">${esc(config.title)}</a>
-        <div class="nav-links">${links}</div>
-      </div>
-    </nav>`;
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="#top">${esc(config.title)}</a>
+      <div class="nav-links">${links}</div>
+    </div>
+  </nav>`;
 }
+
+// Highlights the tab of the section currently in view.
+const scrollSpy = `
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
+  var secs=tabs.map(function(a){return document.querySelector(a.getAttribute('href'))}).filter(Boolean);
+  function update(){
+    var y=window.scrollY+120, cur=secs[0];
+    secs.forEach(function(s){ if(s.offsetTop<=y) cur=s; });
+    if(window.innerHeight+window.scrollY>=document.body.scrollHeight-4) cur=secs[secs.length-1];
+    tabs.forEach(function(a){ a.classList.toggle('on', cur && a.getAttribute('href')==='#'+cur.id); });
+  }
+  window.addEventListener('scroll',update,{passive:true}); update();
+})();`;
 
 // ---------- page -------------------------------------------------------------
 
 function page() {
   const about = renderAbout();
   const interests = renderInterests();
+  const publications = renderPublications();
+  const posts = renderPosts();
   const education = renderEducation();
   const experience = renderExperience();
   const awards = renderAwards();
@@ -181,20 +237,14 @@ function page() {
   const navSections = [
     about && { id: 'about', label: 'About' },
     interests && { id: 'interests', label: 'Interests' },
+    publications && { id: 'publications', label: 'Publications' },
+    posts && { id: 'blog', label: 'Blog' },
     education && { id: 'education', label: 'Education' },
-    experience && { id: 'experience', label: 'Experience' },
+    experience && { id: 'experience', label: (config.experience.length === 1 && config.experience[0].title) || 'Experience' },
     awards && { id: 'awards', label: 'Awards' },
-    { id: 'contact', label: 'Contact' },
   ].filter(Boolean);
 
-  const socials = (config.social || []).map((s) => `
-          <a class="social-link" href="${esc(s.url)}" target="_blank" rel="noopener" aria-label="link">${iconTag(s.icon)}</a>`).join('');
-
-  const contact = section('contact', 'Contact', `
-      <p class="prose">Feel free to reach out${isReal(config.email) ? ` at <a href="mailto:${esc(config.email)}">${esc(config.email)}</a>` : ''}.</p>
-      <div class="socials">${socials}</div>`);
-
-  const year = config.buildYear || '';
+  const year = config.buildYear || new Date().getFullYear();
 
   return `<!DOCTYPE html>
 <html lang="${esc(config.defaultLanguage || 'en')}">
@@ -212,130 +262,150 @@ function page() {
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css" referrerpolicy="no-referrer" />
   <style>${css()}</style>
 </head>
 <body>
 ${renderNav(navSections)}
-  <main class="container">
+  <main class="wrap">
 ${renderHeader()}
 ${about}
 ${interests}
+${publications}
+${posts}
 ${education}
 ${experience}
 ${awards}
-${contact}
+    <footer>&copy; ${esc(year)} ${esc(config.author)}</footer>
   </main>
-  <footer class="footer">
-    <p>&copy; ${esc(config.author)}${year ? ` &middot; ${esc(year)}` : ''}</p>
-  </footer>
+  <script>${scrollSpy}</script>
 </body>
 </html>
 `;
 }
 
 // ---------- styles -----------------------------------------------------------
+// Ivory paper, ink text, oxblood accent. Serif for display, sans for reading.
 
 function css() {
   return `
-:root{
-  --bg:#f5f4ef; --card:#ffffff; --fg:#23232a; --muted:#74747e; --soft:#9a9aa4;
-  --line:#edece5; --card-line:#eae9e1;
-  --accent:#33569f; --accent-soft:#eef2fa; --accent-line:#dde6f6;
-  --serif:'Lora',Georgia,'Times New Roman',serif;
-  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
-  --maxw:820px;
-}
+:root{--bg:#faf7f0;--paper:#fffdf8;--fg:#1b1d24;--muted:#6b6862;--line:#e7e0d2;--line2:#cfc6b4;
+  --accent:#8c2f39;--accent2:#a8464f;--soft:#f3eee3;--bar:rgba(250,247,240,.9);
+  --serif:Newsreader,'Iowan Old Style',Georgia,serif;
+  --sans:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root{--bg:#15130f;--paper:#1c1a15;--fg:#ece7dc;--muted:#a49e92;
+  --line:#2e2a22;--line2:#4a4436;--accent:#e39aa2;--accent2:#f0b3b9;--soft:#211e18;--bar:rgba(21,19,15,.9)}}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;color:var(--fg);background:var(--bg);
-  font-family:var(--sans);line-height:1.72;font-size:16.5px;
-  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-a{color:var(--accent);text-decoration:none;text-underline-offset:2px}
-a:hover{text-decoration:underline}
-::selection{background:var(--accent-soft)}
+html{scroll-behavior:smooth;scroll-padding-top:70px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:19px/1.72 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:var(--accent2);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+::selection{background:var(--soft)}
 
 /* nav */
-.nav{position:sticky;top:0;z-index:20;background:rgba(245,244,239,.82);
-  backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid var(--line)}
-.nav-inner{max-width:var(--maxw);margin:0 auto;padding:14px 28px;
-  display:flex;align-items:center;justify-content:space-between;gap:16px}
-.nav-brand{font-family:var(--serif);font-weight:600;font-size:18px;color:var(--fg);letter-spacing:-.01em}
+.nav{position:sticky;top:0;z-index:5;background:var(--bar);backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:980px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;
+  justify-content:space-between;gap:16px}
+.nav-brand{font-family:var(--serif);font-weight:600;font-size:1.15rem;color:var(--fg);letter-spacing:-.01em}
 .nav-brand:hover{text-decoration:none;color:var(--accent)}
-.nav-links{display:flex;gap:22px;flex-wrap:wrap}
-.nav-links a{color:var(--muted);font-size:14px;font-weight:500;letter-spacing:.01em}
-.nav-links a:hover{color:var(--accent);text-decoration:none}
+.nav-links{display:flex;gap:24px;font-size:.92rem}
+.nav-links a{color:var(--muted);font-weight:500;letter-spacing:.01em;padding-bottom:3px}
+.nav-links a:hover{color:var(--fg);text-decoration:none}
+.nav-links a.on{color:var(--fg);box-shadow:inset 0 -2px 0 var(--accent)}
 
-/* content sits directly on the light base — no card */
-.container{max-width:var(--maxw);margin:0 auto;padding:10px 28px 28px}
+.wrap{max-width:980px;margin:0 auto;padding:0 32px 110px}
 
 /* hero */
-.hero{display:flex;gap:36px;align-items:center;padding:40px 0 34px;scroll-margin-top:78px}
-.avatar{width:166px;height:166px;border-radius:50%;object-fit:cover;
-  border:1px solid var(--line);box-shadow:0 6px 22px -8px rgba(31,35,40,.25);
-  flex:none;background:#eee}
+.hero{display:flex;gap:40px;align-items:center;padding:56px 0 8px}
+.avatar{width:176px;height:176px;border-radius:50%;object-fit:cover;flex:none;background:var(--paper);
+  border:1px solid var(--line);box-shadow:0 10px 30px -12px rgba(60,40,20,.4)}
 .hero-text{min-width:0}
-.name{margin:0 0 7px;font-family:var(--serif);font-size:40px;font-weight:600;
-  letter-spacing:-.015em;line-height:1.08;color:var(--fg)}
-.name-alt{margin:0 0 6px;color:var(--muted);font-size:18px}
-.professions{margin:0 0 10px;color:var(--accent);font-weight:600;letter-spacing:.01em}
-.meta{display:flex;flex-wrap:wrap;gap:6px 22px;color:var(--muted);font-size:14.5px;margin:2px 0 14px}
+.name{margin:0 0 8px;font-family:var(--serif);font-size:3rem;font-weight:500;letter-spacing:-.015em;line-height:1.08}
+.name-alt{margin:0 0 6px;color:var(--muted);font-size:1.1rem}
+.professions{margin:0 0 10px;color:var(--accent);font-weight:600}
+.meta{display:flex;flex-wrap:wrap;gap:6px 22px;color:var(--muted);font-size:.9rem;margin:2px 0 14px}
 .meta-item i{color:var(--accent);margin-right:7px}
 .meta a{color:var(--muted)}
 .meta a:hover{color:var(--accent)}
-.socials{display:flex;gap:17px;font-size:20px}
-.social-link{color:var(--soft);transition:color .18s,transform .18s}
-.social-link:hover{color:var(--accent);transform:translateY(-2px)}
+.socials{display:flex;gap:18px;font-size:1.25rem}
+.social-link{color:var(--muted);transition:color .18s,transform .18s}
+.social-link:hover{color:var(--accent);transform:translateY(-2px);text-decoration:none}
 
-/* sections */
-.section{padding:30px 0;border-top:1px solid var(--line);scroll-margin-top:78px}
-.section-title{font-family:var(--serif);font-size:23px;font-weight:600;letter-spacing:-.01em;
-  margin:0 0 18px;color:var(--fg);position:relative;padding-bottom:11px}
-.section-title::after{content:"";position:absolute;left:0;bottom:0;width:40px;height:2px;
-  background:var(--accent);border-radius:2px}
-.subhead{font-size:13px;color:var(--soft);margin:20px 0 8px;font-weight:600;
-  text-transform:uppercase;letter-spacing:.06em}
-.prose{font-size:16.5px;color:#36363d}
-.prose p{margin:0 0 14px}
-.prose p:last-child{margin-bottom:0}
-.prose strong{font-weight:600;color:var(--fg)}
+/* research interests */
+.interest-grid{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.interest{display:inline-flex;align-items:center;gap:10px;padding:8px 18px;background:var(--paper);
+  border:1px solid var(--line2);border-radius:999px;font-weight:500;font-size:.95rem}
+.interest i{color:var(--accent)}
 
-/* interests */
-.interest-grid{display:flex;flex-wrap:wrap;gap:12px}
-.interest{display:flex;align-items:center;gap:10px;padding:9px 18px;
-  background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:999px;
-  font-weight:500;font-size:15px;color:#2e3954}
-.interest-icon i{color:var(--accent)}
+/* bio */
+.bio{margin-top:40px;border-top:1px solid var(--line);padding-top:30px}
+.bio p{font-family:var(--serif);font-size:1.42rem;line-height:1.68;color:var(--fg);margin:0 0 18px}
+.bio p b,.bio p strong{font-weight:600}
+.bio p.invite{font-size:1.2rem;color:var(--muted)}
 
-/* timeline (education / experience / awards) */
-.timeline{list-style:none;margin:0;padding:0}
-.tl-item{display:flex;gap:26px;padding:14px 0;border-bottom:1px solid var(--line)}
-.tl-item:last-child{border-bottom:none}
-.tl-date{flex:none;width:118px;color:var(--soft);font-size:12.5px;font-weight:600;
-  padding-top:4px;letter-spacing:.04em;text-transform:uppercase;font-variant-numeric:tabular-nums}
-.tl-body{min-width:0}
-.tl-title{font-weight:600;font-size:16.5px;color:var(--fg)}
-.tl-sub{color:var(--muted);font-size:14.5px;margin-top:1px}
-.tl-desc{font-size:15px;margin-top:4px;color:#3d3d45}
+/* section heads */
+h2.sec{font-family:var(--serif);font-size:1.32rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--fg);margin:84px 0 8px;padding-bottom:14px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:12px}
+h2.sec i{color:var(--accent);font-size:1.05rem}
+h3.grp{font-family:var(--serif);font-size:1.35rem;font-weight:500;margin:46px 0 4px}
 
-/* footer */
-.footer{max-width:var(--maxw);margin:0 auto;padding:6px 28px 44px;
-  text-align:center;color:var(--soft);font-size:13px}
+/* publications */
+.pub{padding:20px 0;border-bottom:1px solid var(--line)}
+.pub:last-of-type{border-bottom:0}
+.pub h3{font-family:var(--serif);font-size:1.22rem;line-height:1.35;margin:0 0 6px;font-weight:600}
+.pub h3 a{color:var(--fg)}
+.pub h3 a:hover{color:var(--accent);text-decoration:none}
+.pub p{margin:0}
+.authors{font-size:.95rem;color:var(--muted)}
+.authors b,.na b{color:var(--fg);font-weight:600}
+.venue{font-size:.86rem;margin-top:6px!important;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:var(--accent)}
+.plinks{margin-top:10px!important}
+.plinks a{display:inline-block;margin:0 8px 4px 0;padding:2px 12px;border-radius:3px;font-size:.8rem;
+  font-weight:600;letter-spacing:.02em;border:1px solid var(--line2);color:var(--fg)}
+.plinks a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.more-note{color:var(--muted);font-size:.92rem;margin:26px 0 0}
 
-/* responsive */
-@media (max-width:680px){
-  body{font-size:16px}
-  .nav-inner{padding:12px 18px}
-  .container{padding:6px 20px 24px}
-  .hero{flex-direction:column;text-align:center;gap:18px;padding:28px 0 26px}
-  .avatar{width:132px;height:132px}
-  .meta,.socials,.interest-grid{justify-content:center}
-  .name{font-size:31px}
-  .tl-item{flex-direction:column;gap:3px}
-  .tl-date{width:auto}
-  .nav-brand{max-width:55%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* blog cards */
+.note{display:block;margin-top:18px;padding:22px 24px;background:var(--paper);border:1px solid var(--line);
+  border-radius:12px;color:var(--fg);transition:border-color .15s}
+.note:hover{border-color:var(--accent);text-decoration:none;color:var(--fg)}
+.note .nt{font-family:var(--serif);font-size:1.35rem;font-weight:600;line-height:1.3}
+.note .nd{color:var(--muted);font-size:.86rem;margin:6px 0 4px;letter-spacing:.03em}
+.note .na{color:var(--muted);font-size:.86rem;margin-bottom:8px}
+.note .ns{color:var(--fg);font-size:1rem;opacity:.85}
+.postlist{margin-top:4px}
+
+/* education / teaching rows */
+.xr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:22px;align-items:start;padding:20px 0;
+  border-bottom:1px solid var(--line)}
+.xr:last-child{border-bottom:0}
+.xr .org2{font-family:var(--serif);font-size:1.25rem;font-weight:600;line-height:1.3}
+.xr .role{font-size:1rem;color:var(--fg);margin-top:2px}
+.xr .d{font-size:.96rem;color:var(--muted);margin-top:6px;line-height:1.6}
+.xr .when{font-size:.88rem;color:var(--muted);white-space:nowrap;padding-top:4px;letter-spacing:.02em}
+
+footer{margin-top:90px;color:var(--muted);font-size:.88rem;border-top:1px solid var(--line);padding-top:22px}
+
+@media(max-width:760px){
+  body{font-size:16.5px}
+  .wrap{padding:0 20px 80px}
+  .nav-inner{padding:12px 20px}
+  .nav-brand{display:none}
+  .nav-links{gap:18px;font-size:.88rem;overflow-x:auto;scrollbar-width:none;white-space:nowrap}
+  .nav-links::-webkit-scrollbar{display:none}
+  .hero{flex-direction:column;text-align:center;gap:18px;padding:32px 0 4px}
+  .avatar{width:136px;height:136px}
+  .meta,.socials{justify-content:center}
+  .name{font-size:2.3rem}
+  .bio p{font-size:1.2rem}
+  .bio p.invite{font-size:1.05rem}
+  h2.sec{margin-top:60px;font-size:1.15rem}
+  .xr{grid-template-columns:1fr;gap:2px}
+  .xr .when{padding-top:4px}
 }
 `;
 }

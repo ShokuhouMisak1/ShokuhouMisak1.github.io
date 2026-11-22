@@ -86,6 +86,16 @@ module.exports = {
   scholarUrl: 'https://scholar.google.com/citations?user=Ya1cdNUAAAAJ&hl=en',
   publications: [
     {
+      title: 'ChipRSI: Learning an RTL Optimization Methodology from EDA-Graded Runs',
+      url: 'papers/ChipRSI_DAC2027.pdf', // static/papers/ChipRSI_DAC2027.pdf
+      authors: ['Jiachen Liu*', 'Chengyang Shi*', 'Yiqian Min'],
+      note: '*Equal contribution',
+      venue: 'Under review at DAC 2027',
+      links: [
+        { label: 'PDF', url: 'papers/ChipRSI_DAC2027.pdf' },
+      ],
+    },
+    {
       title: 'Open-Endedness Bench: Measuring Epistemic Process from Agent Records',
       url: 'https://arxiv.org/abs/2610.02588',
       authors: ['Chengyang Shi', 'Xianglin Ji', 'Jintao Huang', 'Jicheng Wang', 'Yifeng He', 'Jiachen Liu'],

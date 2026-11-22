@@ -56,7 +56,12 @@ const isReal = (s) => typeof s === 'string' && s.trim() && !s.includes('<') ;
 
 // Author list with your own name (config.author) in bold.
 function renderAuthors(authors = []) {
-  return authors.map((a) => (a === config.author ? `<b>${esc(a)}</b>` : esc(a))).join(', ');
+  // A trailing "*" marks equal contribution and is kept outside the bold name.
+  return authors.map((a) => {
+    const name = a.replace(/\*+$/, '');
+    const mark = a.slice(name.length);
+    return (name === config.author ? `<b>${esc(name)}</b>` : esc(name)) + esc(mark);
+  }).join(', ');
 }
 
 const extLink = (url, inner, cls = '') => `<a${cls ? ` class="${cls}"` : ''} href="${esc(url)}" target="_blank" rel="noopener">${inner}</a>`;
@@ -120,7 +125,7 @@ function renderPublications() {
     return `
       <article class="pub">
         <h3>${title}</h3>
-        <p class="authors">${renderAuthors(p.authors)}</p>
+        <p class="authors">${renderAuthors(p.authors)}${isReal(p.note) ? ` <span class="pub-note">(${esc(p.note)})</span>` : ''}</p>
         ${isReal(p.venue) ? `<p class="venue">${esc(p.venue)}</p>` : ''}
         ${links ? `<p class="plinks">${links}</p>` : ''}
       </article>`;
@@ -363,6 +368,7 @@ h3.grp{font-family:var(--serif);font-size:1.35rem;font-weight:500;margin:46px 0 
 .authors{font-size:.95rem;color:var(--muted)}
 .authors b,.na b{color:var(--fg);font-weight:600}
 .venue{font-size:.86rem;margin-top:6px!important;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:var(--accent)}
+.pub-note{color:var(--muted);font-size:.86em}
 .plinks{margin-top:10px!important}
 .plinks a{display:inline-block;margin:0 8px 4px 0;padding:2px 12px;border-radius:3px;font-size:.8rem;
   font-weight:600;letter-spacing:.02em;border:1px solid var(--line2);color:var(--fg)}

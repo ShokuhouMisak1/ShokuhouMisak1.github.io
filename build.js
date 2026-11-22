@@ -64,7 +64,17 @@ function renderAuthors(authors = []) {
   }).join(', ');
 }
 
-const extLink = (url, inner, cls = '') => `<a${cls ? ` class="${cls}"` : ''} href="${esc(url)}" target="_blank" rel="noopener">${inner}</a>`;
+// Local static files get a ?v=<content hash> suffix so browsers fetch a replaced
+// file (e.g. an updated CV.pdf) instead of showing their cached copy.
+function versioned(url) {
+  if (/^[a-z]+:/i.test(url)) return url;
+  const file = path.join(STATIC, url.replace(/^\.\//, ''));
+  if (!fs.existsSync(file)) return url;
+  const hash = require('crypto').createHash('md5').update(fs.readFileSync(file)).digest('hex').slice(0, 8);
+  return `${url}?v=${hash}`;
+}
+
+const extLink = (url, inner, cls = '') => `<a${cls ? ` class="${cls}"` : ''} href="${esc(versioned(url))}" target="_blank" rel="noopener">${inner}</a>`;
 
 function renderHeader() {
   const avatarFile = fs.existsSync(path.join(STATIC, config.avatar)) ? config.avatar : 'avatar.svg';
@@ -79,7 +89,7 @@ function renderHeader() {
   }
 
   const socials = (config.social || []).map((s) => `
-        <a class="social-link" href="${esc(s.url)}" target="_blank" rel="noopener" aria-label="link">${iconTag(s.icon)}</a>`).join('');
+        <a class="social-link" href="${esc(versioned(s.url))}" target="_blank" rel="noopener" aria-label="link">${iconTag(s.icon)}</a>`).join('');
 
   return `
     <header class="hero" id="top">
@@ -204,7 +214,7 @@ function section(id, title, icon, inner) {
 
 function renderNav(sections) {
   const links = sections.map((s) => `<a href="#${s.id}">${s.label}</a>`).join('')
-    + (fs.existsSync(path.join(STATIC, 'CV.pdf')) ? '<a href="./CV.pdf" target="_blank" rel="noopener">CV</a>' : '');
+    + (fs.existsSync(path.join(STATIC, 'CV.pdf')) ? `<a href="${versioned('./CV.pdf')}" target="_blank" rel="noopener">CV</a>` : '');
   return `
   <nav class="nav">
     <div class="nav-inner">
